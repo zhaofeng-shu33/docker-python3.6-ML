@@ -3,3 +3,4 @@ WORKDIR /app
 COPY . /app
 ENV PIP_MIRROR https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip install -i $PIP_MIRROR -r requirements.txt
+RUN rm -rf $HOME/.cache/pip
