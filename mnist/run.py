@@ -10,8 +10,8 @@ import model
 def main():
     '''load test data and calls the model predict function
     '''
-    X_test = np.load('/app/X_test.npx')
-    y_test = np.load('/app/y_test.npx')
+    X_test = np.load('X_test.npy')
+    y_test = np.load('y_test.npy')
     y_predict = model.predict(X_test)
     return metrics.accuracy_score(y_test, y_predict)
     
