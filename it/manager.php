@@ -8,7 +8,7 @@ function docker_start($name, $date, $submission_number){
   $name_base = $name . "_" . $date . "_" . $submission_number;
   $zip_file = $mount_path . "/uploads/" . $name_base . ".zip";
   $log_file = $log_path . "/" . $name_base . ".txt";
-  $shell_exe_str = "sudo docker run -d --rm --name " . $name .  " -v " . $mount_path . ":" . $mount_path " python36ml_it:v1 python " . $mount_path . "/read_data_compute_gain_NEW_NEW.py" . $zip_file . ">>" $log_file . "2>&1";
+  $shell_exe_str = "sudo docker run -d --rm --name " . $name .  " -v " . $mount_path . ":" . $mount_path . " python36ml_it:v1 python " . $mount_path . "/read_data_compute_gain_NEW_NEW.py" . $zip_file . ">>" . $log_file . "2>&1";
   $container_id = shell_exec($shell_exe_str);   
   return $container_id;
 }
