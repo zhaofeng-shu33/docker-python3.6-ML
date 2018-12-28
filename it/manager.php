@@ -1,22 +1,27 @@
 <?php
 // key authenticationi
-define('KEY_LIST', array("a9542bb104fe3f4d562e1d275e03f5ba", "2ad0c6e57f2552cf4b296a3d6dfa93f1"));
-function docker_start($name){
+define('KEY_LIST', array("zsttq6543L", "Wsp6pQGEPp", "Tn8IgfmdkT", "V9ChbSvbvB", "RspVh2H8RI", "cJHCdWjrKi", "YnjbfX1kPU", "kWrq8GtWLO",  "QLd4nUC5f4", "HW3EYYBh6E", "yfUNQalGHe", "mVFr6VpBd9", "QiRCWGDJIG", "crouWalnlJ" ));
+function docker_start($name, $date, $submission_number){
   // start a new docker instance without checking
-  $shell_exe_str = "docker run -d --rm --name " . $name .  " -v " .  __DIR__ . "/" . $name . ":/dist/model python36ml_mnist:v4 python run.py";
+  $mount_path = __DIR__ . "/feima";	
+  $log_path = __DIR__ . "/log";
+  $name_base = $name . "_" . $date . "_" . $submission_number;
+  $zip_file = $mount_path . "/uploads/" . $name_base . ".zip";
+  $log_file = $log_path . "/" . $name_base . ".txt";
+  $shell_exe_str = "sudo docker run -d --rm --name " . $name .  " -v " . $mount_path . ":" . $mount_path " python36ml_it:v1 python " . $mount_path . "/read_data_compute_gain_NEW_NEW.py" . $zip_file . ">>" $log_file . "2>&1";
   $container_id = shell_exec($shell_exe_str);   
   return $container_id;
 }
 function docker_stop($name){
   // kill the running docker container without checking
-  $shell_exe_str = "docker kill " . $name;
+  $shell_exe_str = "sudo docker kill " . $name;
   $returned_name = shell_exec($shell_exe_str);
   return $returned_name;
 }
 function docker_status($name){
   // only check the running docker
   // return value chooses from ['STOP', 'RUNNING']
-  $shell_exe_str = "docker ps";
+  $shell_exe_str = "sudo docker ps";
   $csv_str = shell_exec($shell_exe_str);
   $container_list = explode("\n", $csv_str);
   $num_container = count($container_list);
@@ -40,25 +45,6 @@ if(!isset($key)){
 }
 elseif(!check_key($key)){
  die("incorrect key");
-}
-// directory initialization
-if(!file_exists($key)){
-  if(mkdir($key)){
-    echo "initialize the directory for key = " . $key . "...<br/>";
-  }
-  else{
-    echo "make dir failed";
-  }
-}
-// uploader copy
-$upload_php = $key . "/upload.php";
-if(!file_exists($upload_php)){
-  if(copy("upload.php", $upload_php)){
-    echo "copy upload.php to user directory<br/>";
-  }
-  else{
-    echo "copy failed";
-  }
 }
 $command = $_GET["command"];
 if($command == 'start'){
