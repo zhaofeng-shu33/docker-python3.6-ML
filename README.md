@@ -1,6 +1,7 @@
 # docker-python3.6-ML
-This branch is used as the final project online judge of Course Information Theory(TBSI 2018 Autumn).
-The name of the sandbox is `zhaofengshu33/python36ml_it:v1`, which has `tensorflow`, `keras`, `torch`, `pandas` installed.
+This branch is used as the  online judge of the final project of the Course **Information Theory**(TBSI 2018 Autumn).
+The name of the sandbox is `zhaofengshu33/python36ml_it:v1`, which has `tensorflow`, `keras`, `torch`, `pandas` installed and is available 
+from [docker hub](https://cloud.docker.com/u/zhaofengshu33/repository/docker/zhaofengshu33/python36ml_it)
 
 # Purpose
 Test data should be kept secret as the prediction accuracy on test data influences the scoring of students. As a result, we make
