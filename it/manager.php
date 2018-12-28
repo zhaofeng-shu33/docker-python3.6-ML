@@ -2,11 +2,15 @@
 // key authenticationi
 define('KEY_LIST', array("zsttq6543L", "Wsp6pQGEPp", "Tn8IgfmdkT", "V9ChbSvbvB", "RspVh2H8RI", "cJHCdWjrKi", "YnjbfX1kPU", "kWrq8GtWLO",  "QLd4nUC5f4", "HW3EYYBh6E", "yfUNQalGHe", "mVFr6VpBd9", "QiRCWGDJIG", "crouWalnlJ" ));
 function docker_start($name, $date, $submission_number){
-  // start a new docker instance without checking
+  // start a new docker instance with basic checking
+  // if -1 is returned, the zip file is not on the server, upload should be done first
   $mount_path = __DIR__ . "/feima";	
   $log_path = __DIR__ . "/log";
   $name_base = $name . "_" . $date . "_" . $submission_number;
   $zip_file = $mount_path . "/uploads/" . $name_base . ".zip";
+  if(!file_exists($zip_file)){
+    return -1;
+  }
   $log_file = $log_path . "/" . $name_base . ".txt";
   $shell_exe_str = "sudo docker run -d --rm --name " . $name .  " -v " . $mount_path . ":" . $mount_path . " python36ml_it:v1 python " . $mount_path . "/read_data_compute_gain_NEW_NEW.py" . $zip_file . ">>" . $log_file . "2>&1";
   $container_id = shell_exec($shell_exe_str);   
@@ -31,6 +35,18 @@ function docker_status($name){
   }
   return "STOP";
 }
+function check_date($date_str){
+  // check the date is between 20181201 - 20181230
+  $start = strtotime("20181201");
+  $end = strtotime("20181230");
+  $check_date = strtotime($date_str);
+  return ($start <= $check_date) && ($check_date <= $end);
+}
+function check_submission_number($submission_number){
+  // check that the submission_number is between 0 and 50
+  $submission_num = intval($submission_number);
+  return (0 <= $submission_num) && ($submission_num <= 50);
+}
 function check_key($name){
   // check whether $name is within KEY_LIST
   foreach(KEY_LIST as $key){
@@ -53,7 +69,18 @@ if($command == 'start'){
     echo "docker " . $key . " already started <br/>";
   }
   else{
-    $container_id = docker_start($key); 
+    $submission_number = $_GET["sn"];
+    $date_str = $_GET["date"];
+    if(!check_date($date_str)){
+      die("invalid get parameter date = " . $date_str);
+    }
+    elseif(!check_submission_number($submission_number)){
+      die("invalid get parameter sn = " . $submission_number);
+    } 
+    $container_id = docker_start($key, $date_str, $submission_number); 
+    if($container_id == -1){
+      die("requested resource not on the server, upload it first");
+    }
     echo "docker started...<br/>";
     echo "container id = " . $container_id . "<br/>";
   }
