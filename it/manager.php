@@ -3,6 +3,7 @@
 define('KEY_LIST', array("zsttq6543L", "Wsp6pQGEPp", "Tn8IgfmdkT", "V9ChbSvbvB", "RspVh2H8RI", "cJHCdWjrKi", "YnjbfX1kPU", "kWrq8GtWLO",  "QLd4nUC5f4", "HW3EYYBh6E", "yfUNQalGHe", "mVFr6VpBd9", "QiRCWGDJIG", "crouWalnlJ" ));
 function docker_start($name, $date, $submission_number){
   // start a new docker instance with basic checking
+  // if 0 is returned, the program is ok
   // if -1 is returned, the zip file is not on the server, upload should be done first
   $mount_path = __DIR__ . "/feima";	
   $log_path = __DIR__ . "/log";
@@ -12,9 +13,10 @@ function docker_start($name, $date, $submission_number){
     return -1;
   }
   $log_file = $log_path . "/" . $name_base . ".txt";
-  $shell_exe_str = "sudo docker run -d --rm --name " . $name .  " -v " . $mount_path . ":" . $mount_path . " python36ml_it:v1 python " . $mount_path . "/read_data_compute_gain_NEW_NEW.py" . $zip_file . ">>" . $log_file . "2>&1";
-  $container_id = shell_exec($shell_exe_str);   
-  return $container_id;
+  $shell_exe_str = "sudo docker run -d --rm --name " . $name .  " -v " . $mount_path . ":" . $mount_path .
+  " python36ml_it:v1 python " . $mount_path . "/read_data_compute_gain_NEW_NEW.py " . $zip_file . ">>" . $log_file . "2>&1";
+  $returned_code = exec($shell_exe_str);   
+  return $returned_code;
 }
 function docker_stop($name){
   // kill the running docker container without checking
@@ -77,12 +79,12 @@ if($command == 'start'){
     elseif(!check_submission_number($submission_number)){
       die("invalid get parameter sn = " . $submission_number);
     } 
-    $container_id = docker_start($key, $date_str, $submission_number); 
-    if($container_id == -1){
+    $returned_code = docker_start($key, $date_str, $submission_number); 
+    if($returned_code == -1){
       die("requested resource not on the server, upload it first");
     }
     echo "docker started...<br/>";
-    echo "container id = " . $container_id . "<br/>";
+    echo "returned_code = " . (string)$returned_code . "<br/>";
   }
 }
 elseif($command == "status"){
