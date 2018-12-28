@@ -13,8 +13,10 @@ function docker_start($name, $date, $submission_number){
     return -1;
   }
   $log_file = $log_path . "/" . $name_base . ".txt";
-  $shell_exe_str = "sudo /root/anaconda3/bin/python3 run.py " . $zip_file .  " > " . $log_file . "2>&1 &";
-  $returned_code = exec($shell_exe_str);   
+  $shell_exe_str = "sudo /root/anaconda3/bin/python3 run.py " . $zip_file .  " > " . $log_file . " 2>&1 &";
+  $returned_code = 0;
+  $output = array();
+  exec($shell_exe_str, $output, $returned_code);   
   return $returned_code;
 }
 function docker_stop($name){
