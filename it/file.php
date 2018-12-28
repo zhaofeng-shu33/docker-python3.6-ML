@@ -9,6 +9,9 @@ foreach($files as $file_name){
     elseif(strpos($file_name, $key) === false){
         continue;
     }
+    elseif($date_str != NULL && strpos($file_name, $date_str) === false){
+        continue;
+    }
     $timestamp = filectime("feima/uploads/" . $file_name);
     $qualified_zip_files[] = array(
         "name" => $file_name,

@@ -106,5 +106,30 @@ elseif($command == "view"){
     die("invalid get parameter date = " . $date_str);
   }
   require_once "file.php";
+}
+elseif($command == "delete"){
+  $date_str = isset($_GET["date"]) ? $_GET["date"] : NULL;
+  if($date_str == NULL || !check_date($date_str)){
+    die("invalid get parameter date = " . $date_str);
+  }
+  $submission_number = isset($_GET["sn"]) ? $_GET["sn"] : NULL;
+  if($submission_number == NULL || !check_submission_number($submission_number)){
+    die("invalid get parameter sn = " . $submission_number);
+  }
+  // check if the file exists
+  $zip_file = $key . "_" . $date_str . "_" . $submission_number . ".zip";
+  $zip_file_path = __DIR__ . "/feima/uploads/" . $zip_file;
+  if(!file_exists($zip_file_path)){
+    die("file not exists " . $zip_file);
+  }
+  if(unlink($zip_file_path)){
+    echo "del file successfully: " . $zip_file;
+  }
+  else{
+    echo "del file failed: " . $zip_file;
+  } 
+}
+else{
+  die("invalid command: " . $command);
 } 
 ?>
