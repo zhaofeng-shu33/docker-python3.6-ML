@@ -15,11 +15,11 @@ We implement an OJ system which has the following features:
 * Flexibility: the user submitted codes are treated as a Python package to be called from main program. 
 * Completeness: many logic errors specific to the judging problems are considered and handled specifically.
 * Safety: sandbox is used to run the user code, preventing the malicious user harms the server.
-* Easy management: user can interact with the OJ system by API described in [wiki](https://github.com/zhaofeng-shu33/docker-python3.6-ML/wiki/Information_Theory_Project_Check)
+* Easy management: user can interact with the OJ system by API described in our [wiki](https://github.com/zhaofeng-shu33/docker-python3.6-ML/wiki/Information_Theory_Project_Check).
 * Beautiful Interface: the competition results are shown on the index page.
 
 # Developer
 1. feima
 1. hlwang
-1. zhaofeng-shu33
+1. [zhaofeng-shu33](https://github.com/zhaofeng-shu33)
 
