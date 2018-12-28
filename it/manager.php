@@ -1,6 +1,6 @@
 <?php
-// key authenticationi
-define('KEY_LIST', array("zsttq6543L", "Wsp6pQGEPp", "Tn8IgfmdkT", "V9ChbSvbvB", "RspVh2H8RI", "cJHCdWjrKi", "YnjbfX1kPU", "kWrq8GtWLO",  "QLd4nUC5f4", "HW3EYYBh6E", "yfUNQalGHe", "mVFr6VpBd9", "QiRCWGDJIG", "crouWalnlJ" ));
+// key authentication
+require_once "keys.php";
 function docker_start($name, $date, $submission_number){
   // start a new docker instance with basic checking
   // if 0 is returned, the program is ok
