@@ -5,4 +5,6 @@ RUN wget http://deb.debian.org/debian/pool/main/u/unzip/unzip_6.0.orig.tar.gz &&
     cp unix/Makefile ./ && \
     make generic && \
     make install
+RUN cd .. && \
+    rm -r -f unzip*
 WORKDIR /dist
