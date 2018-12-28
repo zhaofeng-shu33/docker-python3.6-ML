@@ -107,7 +107,7 @@ elseif($command == "view"){
   }
   require_once "file.php";
 }
-elseif($command == "delete"){
+elseif($command == "delete" || $command == "download"){
   $date_str = isset($_GET["date"]) ? $_GET["date"] : NULL;
   if($date_str == NULL || !check_date($date_str)){
     die("invalid get parameter date = " . $date_str);
@@ -122,12 +122,23 @@ elseif($command == "delete"){
   if(!file_exists($zip_file_path)){
     die("file not exists " . $zip_file);
   }
-  if(unlink($zip_file_path)){
-    echo "del file successfully: " . $zip_file;
+  if($command == "delete"){
+    if(unlink($zip_file_path)){
+      echo "del file successfully: " . $zip_file;
+    }
+    else{
+      echo "del file failed: " . $zip_file;
+    } 
   }
-  else{
-    echo "del file failed: " . $zip_file;
-  } 
+  elseif($command == "download"){
+    header("Content-type: application/octet-stream" );
+    header("Accept-Ranges: bytes" );
+    $file = fopen($zip_file_path, "r");
+    header("Content-Length: " . filesize($zip_file_path));
+    header("Content-Disposition: attachment; filename=" . $zip_file);
+    echo fread($file, filesize($zip_file_path));
+    fclose($file);
+  }
 }
 else{
   die("invalid command: " . $command);
