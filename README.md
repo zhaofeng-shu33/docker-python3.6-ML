@@ -19,7 +19,7 @@ We implement an OJ system which has the following features:
 * Beautiful Interface: the competition results are shown on the index page.
 
 # Developer
-feima
-zhaofeng-shu33
-hlwang
+1. feima
+1. hlwang
+1. zhaofeng-shu33
 
