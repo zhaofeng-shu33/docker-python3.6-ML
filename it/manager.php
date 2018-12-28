@@ -13,8 +13,7 @@ function docker_start($name, $date, $submission_number){
     return -1;
   }
   $log_file = $log_path . "/" . $name_base . ".txt";
-  $shell_exe_str = "sudo docker run -d --rm --name " . $name .  " -v " . $mount_path . ":" . $mount_path .
-  " python36ml_it:v1 python " . $mount_path . "/read_data_compute_gain_NEW_NEW.py " . $zip_file . ">>" . $log_file . "2>&1";
+  $shell_exe_str = "sudo /root/anaconda3/bin/python3 run.py " . $zip_file .  " > " . $log_file . "2>&1 &";
   $returned_code = exec($shell_exe_str);   
   return $returned_code;
 }
