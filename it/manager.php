@@ -58,8 +58,8 @@ function check_key($name){
   }
   return false;
 }
-$key = $_GET["key"];
-if(!isset($key)){
+$key = isset($_GET["key"]) ? $_GET["key"] : NULL;
+if($key == NULL){
  die("key error");
 }
 elseif(!check_key($key)){
@@ -100,4 +100,11 @@ elseif($command == "stop"){
     echo "docker " . $key . " not started yet<br/>";
   }
 }
+elseif($command == "view"){
+  $date_str = isset($_GET["date"]) ? $_GET["date"] : NULL;
+  if($date_str != NULL && !check_date($date_str)){
+    die("invalid get parameter date = " . $date_str);
+  }
+  require_once "file.php";
+} 
 ?>
