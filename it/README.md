@@ -23,6 +23,14 @@ docker tag $IMAGE python36ml_it:v1
 1. clone the repository and copy its files to the http server root directory.
 ```shell
 git clone -b it https://github.com/zhaofeng-shu33/docker-python3.6-ML
-cp it/ /var/www/html/information_theory
+sudo mkdir -p /var/www/html/information_theory
+sudo cp it/*.php /var/www/html/information_theory/
 ```
-
+2. add the other resources from hlwang's git repo
+```shell
+git clone https://github.com/kongyanye/A-simple-OJ--Online-Judge--system
+cd A-simple*
+sudo cp -r static /var/www/html/information_theory
+sudo cp -t /var/www/html/information_theory index.html run.py upload.php
+```
+3. configure the web server (`apache` or `nginx`) such that you can visit `index.html`.
