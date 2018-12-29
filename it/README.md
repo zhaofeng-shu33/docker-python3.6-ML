@@ -28,9 +28,13 @@ sudo cp it/*.php /var/www/html/information_theory/
 ```
 2. add the other resources from hlwang's git repo
 ```shell
-git clone https://github.com/kongyanye/A-simple-OJ--Online-Judge--system
+git clone -b feima https://github.com/kongyanye/A-simple-OJ--Online-Judge--system
 cd A-simple*
 sudo cp -r static /var/www/html/information_theory
 sudo cp -t /var/www/html/information_theory index.html run.py upload.php
 ```
-3. configure the web server (`apache` or `nginx`) such that you can visit `index.html`.
+3. configure the web server (`apache` or `nginx`) such that you can visit `index.html`. Then to enable the upload, you need:
+```shell
+cd /var/www/html/information_theory
+sudo mkdir -p feima/uploads
+```
