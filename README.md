@@ -21,6 +21,6 @@ We implement an OJ system which has the following features:
 
 # Developer
 1. feima
-1. hlwang
+1. [hlwang](https://github.com/kongyanye)
 1. [zhaofeng-shu33](https://github.com/zhaofeng-shu33)
 
